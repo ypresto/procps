@@ -100,6 +100,7 @@ typedef struct proc_t {
 	vm_stack,       // status          stack size
 	vm_exe,         // status          executable size
 	vm_lib,         // status          library size (all pages, not just used ones)
+	vm_swap,	// status          swap size
 	rtprio,		// stat            real-time priority
 	sched,		// stat            scheduling class
 	vsize,		// stat            number of pages of virtual memory ...

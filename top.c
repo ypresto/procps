@@ -215,7 +215,7 @@ static int sort_P_TME (const proc_t **P, const proc_t **Q)
 }
 
 SCB_NUM1(P_VRT, size)
-SCB_NUM2(P_SWP, size, resident)
+SCB_NUM1(P_SWP, vm_swap)
 SCB_NUM1(P_RES, resident)               // also serves P_MEM !
 SCB_NUM1(P_COD, trs)
 SCB_NUM1(P_DAT, drs)
@@ -1243,7 +1243,7 @@ static FLD_t Fieldstab[] = {
    { "MmRr", "    TIME+ ",  " %9.9s",    9,    -1, SF(TME), "CPU Time, hundredths", L_stat   },
    { "NnFf", " %MEM",       " %#4.1f",  -1,    -1, SF(RES), "Memory usage (RES)",   L_statm  },
    { "OoMm", "  VIRT",      " %5.5s",    5, SK_Kb, SF(VRT), "Virtual Image (kb)",   L_statm  },
-   { "PpOo", " SWAP",       " %4.4s",    4, SK_Kb, SF(SWP), "Swapped size (kb)",    L_statm  },
+   { "PpOo", " SWAP",       " %4.4s",    4, SK_Kb, SF(SWP), "Swapped size (kb)",    L_status },
    { "QqTt", "  RES",       " %4.4s",    4, SK_Kb, SF(RES), "Resident size (kb)",   L_statm  },
    { "RrKk", " CODE",       " %4.4s",    4, SK_Kb, SF(COD), "Code size (kb)",       L_statm  },
    { "SsLl", " DATA",       " %4.4s",    4, SK_Kb, SF(DAT), "Data+Stack size (kb)", L_statm  },
@@ -3134,7 +3134,7 @@ static void task_show (const WIN_t *q, const proc_t *p)
             MKCOL(p->state);
             break;
          case P_SWP:
-            MKCOL(scale_num(PAGES_TO_KB(p->size - p->resident), w, s));
+            MKCOL(scale_num(p->vm_swap, w, s));
             break;
          case P_TME:
          case P_TM2:

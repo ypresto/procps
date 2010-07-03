@@ -141,7 +141,8 @@ static void status2proc(char *S, proc_t *restrict P, int is_proc){
       F(Tgid)
       NUL NUL NUL NUL
       F(SigBlk)
-      NUL NUL NUL
+      F(VmSwap)
+      NUL NUL
     };
 
 #undef F
@@ -156,6 +157,7 @@ ENTER(0x220);
     P->vm_stack= 0;
     P->vm_exe  = 0;
     P->vm_lib  = 0;
+    P->vm_swap = 0;
     P->nlwp    = 0;
     P->signal[0] = '\0';  // so we can detect it as missing for very old kernels
 
@@ -292,6 +294,9 @@ ENTER(0x220);
     case_VmStk:
         P->vm_stack = strtol(S,&S,10);
         continue;
+    case_VmSwap:
+	P->vm_swap = strtol(S,&S,10);
+	continue;
     }
 
 #if 0
